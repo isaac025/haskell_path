@@ -9,8 +9,10 @@ Design](./software_eng/add), [programming structure](./software_eng/sicp)
 3. functional programming specifics like [monads](./monads) 
 
 ***all implemented in Haskell***.
+
 <sup>1</sup> It is likely to find programming exercises here also from [Project
 Euler](https://projecteuler.net)
+
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered
 here in order to develop better practices before implementing for the Real

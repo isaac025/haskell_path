@@ -60,6 +60,7 @@ instance Heap WeightBiasedLeftistHeap where
     isEmpty w = w == empty
 
     -- Exercise 3.5 (c)
+    -- modify merge to a single top-down pass
     merge w EWBLH = w
     merge EWBLH w = w
     merge w1@(TWBLH _ x l1 r1) w2@(TWBLH _ y l2 r2)
@@ -80,11 +81,24 @@ makeT' x w1 w2
     | size w1 >= size w2    = TWBLH (size w2 + 1) x w1 w2
     | otherwise             = TWBLH (size w1 + 1) x w2 w1
 
--- Data Structure Tree
+-- Data Structure Tree & Binomial(Tree)Heap
 data Tree a = E
             | Node Int a [Tree a] deriving (Show, Eq, Read)
 
 newtype BinomialHeap a = BH [Tree a] deriving (Show, Eq, Read)
+
+instance Heap BinomialHeap where
+    empty = BH []
+    isEmpty (BH ts) = null ts
+
+    merge (BH ts1) (BH ts2) = BH (mrg ts1 ts2)
+    insert x (BH ts) = BH (insTree (Node 0 x []) ts)
+
+    findMin (BH ts) = root t
+        where Just (t,ts) = removeMinTree ts
+
+    deleteMin (BH ts) = Just (BH (mrg (reverse ts1) ts2))
+        where Just ((Node _ x ts1), ts2) = removeMinTree ts
 
 link t1@(Node r x1 c1) t2@(Node _ x2 c2)
     | x1 <= x2 = Node (r+1) x1 (t2:c1)
@@ -116,17 +130,3 @@ removeMinTree (t:ts)
           Just r = root t
           Just r' = root t'
 
-instance Heap BinomialHeap where
-    empty = BH []
-    isEmpty (BH ts) = null ts
-
-    merge (BH ts1) (BH ts2) = BH (mrg ts1 ts2)
-    insert x (BH ts) = BH (insTree (Node 0 x []) ts)
-
-    findMin (BH ts) = root t
-        where Just (t,ts) = removeMinTree ts
-
-    deleteMin (BH ts) = Just (BH (mrg (reverse ts1) ts2))
-        where Just ((Node _ x ts1), ts2) = removeMinTree ts
-
-    

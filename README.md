@@ -1,14 +1,14 @@
 # Haskell Mastery
 This is a repository containing:
 1. computer science topics (from basics to
-advanced), like [data structures](./ds/), [algorithms](./algo)<sup>1</sup>, etc.
+advanced), like [data structures](./comp_science/ds/), [algorithms](./comp_science/algo)<sup>1</sup>, etc.
 
 2. software engineering practices like [Algebra-Driven
-Design](./software_eng/add), [programming structure](./software_eng/sicp) 
+Design](./advance/software_eng/add), [programming structure](./advance/software_eng/sicp) 
 
-3. functional programming specifics like [monads](./monads) 
+3. functional programming (and Haskell) specifics like [monads](./fp_specific/monads) 
 
-***all implemented in Haskell***.
+***All implemented in Haskell***.
 
 <sup>1</sup> It is likely to find programming exercises here also from [Project
 Euler](https://projecteuler.net)

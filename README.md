@@ -15,10 +15,10 @@ Euler](https://projecteuler.net)
 
 # Path
 Legend:
-- <span style="color:blue">*Books*</span>
-- <span style="color:green">*Highly Recommended Books*</span>
-- <span style="color:orange">*Topics*</span>
-- <span style="color:red">*Decisions*</span>
+- blue: Books
+- blue: Highly Recommended Books
+- blue: Topics
+- blue: Decisions
 
 ![path](./path.png)
 

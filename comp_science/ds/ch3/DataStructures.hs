@@ -2,7 +2,10 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module DataStructures where
+module DataStructures ( Heap (..)
+                      , LeftistHeap (..)
+                      , WeightBiasedLeftistHeap (..)
+                      ) where
 
 -- Class for Heap 
 class Heap h where
@@ -94,8 +97,13 @@ instance Heap BinomialHeap where
     merge (BH ts1) (BH ts2) = BH (mrg ts1 ts2)
     insert x (BH ts) = BH (insTree (Node 0 x []) ts)
 
-    findMin (BH ts) = root t
-        where Just (t,ts) = removeMinTree ts
+    -- Exercise 3.5
+    findMin (BH []) = root E
+    findMin (BH [t]) = root t
+    findMin (BH ts) = minimum $ root <$> ts
+
+    --findMin (BH ts) = root t
+    --  where Just (t,ts) = removeMinTree ts
 
     deleteMin (BH ts) = Just (BH (mrg (reverse ts1) ts2))
         where Just ((Node _ x ts1), ts2) = removeMinTree ts
@@ -104,6 +112,7 @@ link t1@(Node r x1 c1) t2@(Node _ x2 c2)
     | x1 <= x2 = Node (r+1) x1 (t2:c1)
     | otherwise = Node (r+1) x2 (t1:c2)
 
+rank' :: Tree a -> Int
 rank' (Node r x c) = r
 
 root E = Nothing

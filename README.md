@@ -13,6 +13,8 @@ Design](./advance/software_eng/add), [programming structure](./advance/software_
 <sup>1</sup> It is likely to find programming exercises here also from [Project
 Euler](https://projecteuler.net)
 
+# Path
+[haskell_paht](./Haskell Path.png)
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered
 here in order to develop better practices before implementing for the Real

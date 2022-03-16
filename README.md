@@ -14,7 +14,7 @@ Design](./advance/software_eng/add), [programming structure](./advance/software_
 Euler](https://projecteuler.net)
 
 # Path
-[haskell](./Haskell\ Path.png)
+![haskell](./Haskell Path.png)
 
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered

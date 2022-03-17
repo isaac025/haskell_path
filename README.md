@@ -16,9 +16,9 @@ Euler](https://projecteuler.net)
 # Path
 Legend:
 - blue: Books
-- blue: Highly Recommended Books
-- blue: Topics
-- blue: Decisions
+- green: Highly Recommended Books
+- orange: Topics
+- red: Decisions
 
 ![path](./path.png)
 

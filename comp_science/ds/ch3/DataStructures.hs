@@ -3,8 +3,10 @@
 {-# LANGUAGE FlexibleContexts #-}
 
 module DataStructures ( Heap (..)
+                      , Set (..)
                       , LeftistHeap (..)
                       , WeightBiasedLeftistHeap (..)
+                      , RedBlackTree (..)
                       ) where
 
 -- Class for Heap 
@@ -139,3 +141,47 @@ removeMinTree (t:ts)
           Just r = root t
           Just r' = root t'
 
+-- Set
+class Set s a where
+    empty' :: s a
+    insert' :: a -> s a -> s a
+    member :: a -> s a -> Bool
+
+-- Red-Black Trees
+data Color = R | B deriving (Show, Eq)
+data RedBlackTree a = ERB
+                    | RBT Color (RedBlackTree a) a (RedBlackTree a)
+                    deriving (Show, Eq)
+
+instance Ord a => Set RedBlackTree a where
+
+    empty' = ERB
+
+    member x ERB = False
+    member x (RBT _ a y b)
+        | x < y     = member x a
+        | x > y     = member x b
+        | otherwise = True
+
+    insert' x s = RBT B a y b
+        where ins ERB = RBT  R ERB x ERB
+              ins s@(RBT color a y b)
+                | x < y = lbalance color (ins a) y b
+                | x > y = rbalance color a y (ins b)
+                | otherwise = s
+              RBT _ a y b = ins s
+    --insert' x (RBT c a y b) = let ins ERB = RBT R ERB x ERB
+    --                            ins rbt@(RBT c a y b)
+    --                              | x < y = balance c (ins a) y b
+    --                              | x > y = balance c a y (ins b)
+    --                              | otherwise = rbt
+    --                       in RBT B a y b
+
+-- Exercise 3.9
+lbalance B (RBT R (RBT R a x b) y c) z d = RBT R (RBT B a x b) y (RBT B c z d)
+lbalance B (RBT R a x (RBT R b y c)) z d = RBT R (RBT B a x b) y (RBT B c z d)
+lbalance color a x b = RBT color a x b
+
+rbalance B a x (RBT R (RBT R b y c) z d) = RBT R (RBT B a x b) y (RBT B c z d)
+rbalance B a x (RBT R b y (RBT R c z d)) = RBT R (RBT B a x b) y (RBT B c z d)
+rbalance color a x b = RBT color a x b

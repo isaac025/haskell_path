@@ -11,9 +11,8 @@ fromList' :: Ord a => [a] -> WeightBiasedLeftistHeap a
 fromList' xs = foldl (\acc x -> merge acc x) EWBLH xs'
     where xs' = map (\x -> insert x EWBLH) xs
 
-fromList'' :: Ord a => [a] -> BinomialHeap a
-fromList'' xs = foldl (\acc x -> merge acc x) EWBLH xs'
-    where xs' = map (\x -> Node x [])) xs
+fromList'' xs = foldl (\acc x -> merge acc x) (BH (0, [])) xs'
+    where xs' = [(BH (0, [Node x []])) | x <- xs]
 
 -- Exercise 3.6
 -- implement binomial heap but 
@@ -21,7 +20,7 @@ fromList'' xs = foldl (\acc x -> merge acc x) EWBLH xs'
 -- tree.
 data Tree a = Node a [Tree a] deriving (Show, Eq, Read)
 
-newtype BinomialHeap a = BH (Int, [Tree a])
+newtype BinomialHeap a = BH (Int, [Tree a]) deriving (Show, Eq, Read)
 
 instance Heap BinomialHeap where
     empty = BH (0, [])
@@ -54,3 +53,7 @@ mrg (r1, h1@(t1:ts1)) (r2,h2@(t2:ts2))
           ts' = mrg (r1, ts1) (r2, ts2)
           (r'', newTree) = insTree (link (r1, t1) (r2, t2)) (r', ts')
 
+-- Exercise 3.9
+fromOrdList :: Ord a => [a] -> RedBlackTree a
+fromOrdList (x:xs) = foldl (\acc x -> insert' x acc) rbt xs
+    where rbt = insert' x ERB

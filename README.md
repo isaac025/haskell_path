@@ -4,9 +4,7 @@ This is a repository containing:
 advanced), like [data structures](./comp_science/ds/), [algorithms](./comp_science/algo)<sup>1</sup>, etc.
 
 2. software engineering practices like [Algebra-Driven
-Design](./advance/software_eng/add), [programming structure](./advance/software_eng/sicp) 
-
-3. functional programming (and Haskell) specifics like [monads](./fp_specific/monads) 
+Design](./advance/software_eng/add), [programming structure](./advance/software_eng/sicp)
 
 ***All implemented in Haskell***.
 
@@ -20,7 +18,7 @@ Legend:
 - orange: Topics
 - red: Decisions
 
-![path](./HaskellPath.drawio)
+![path](./HaskellPath.drawio.png)
 
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered

@@ -20,7 +20,7 @@ Legend:
 - orange: Topics
 - red: Decisions
 
-![path](./path.png)
+![path](./HaskellPath.drawio)
 
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered

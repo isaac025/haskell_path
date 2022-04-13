@@ -9,24 +9,29 @@ class Queue q where
    pop :: (Ord a) => q a -> Maybe (q a)
    
 -- Data Structure Batched Queue
-data BatchedQueue a = List [a] [a]
+data BatchedQueue a = BatchedQueue [a] [a] deriving (Show, Eq)
 
 instance Queue BatchedQueue where
-    empty = List [] []     
-    isEmpty (List f _) = null f
+    empty =  BatchedQueue [] []     
+    isEmpty (BatchedQueue f _) = null f
 
-    push (List [] _) x = List [x] []
-    push (List f r) x = List f (x:r)
+    push (BatchedQueue f r) x = checkf f (x : r)
 
-    top (List [] _) = Nothing
-    top (List (x:f) _) = Just x
+    top (BatchedQueue [] _) = Nothing
+    top (BatchedQueue (x:f) _) = Just x
 
-    pop (List [] _) = Nothing
-    pop (List (x:f) r) = Just (List f r)
+    pop (BatchedQueue (x:f) r) = case isEmpty q' of
+        True -> Nothing 
+        False -> Just q'
+        where q' = checkf f r
 
-checkf :: (Ord a) => BatchedQueue a -> BatchedQueue a
-checkf (List [] r) = (List (reverse r) [])
-checkf q = q
+checkf :: (Ord a) => [a] -> [a] -> BatchedQueue a
+checkf [] r = BatchedQueue (reverse r) []
+checkf f r = BatchedQueue f r
+
+fromList :: (Ord a) => [a] -> BatchedQueue a
+fromList [] = BatchedQueue [] []
+fromList ls = foldl (\acc x -> push acc x) (BatchedQueue [] []) ls 
 
 -- Exercise 5.1
 class Deque q where
@@ -42,10 +47,6 @@ class Deque q where
     eject :: (Ord a) => q a -> Maybe (q a)
 
 data DoubleEndedQueue a = DoubleList [a] [a]
-
-{- Function that makes the list symmetric
- - for pop and eject
- -}
 instance Deque DoubleEndedQueue where
     empty' = DoubleList [] []
     isEmpty' (DoubleList f r) = null f && null r
@@ -64,4 +65,5 @@ instance Deque DoubleEndedQueue where
     pop' (DoubleList [] []) = Nothing
     pop' (DoubleList _ xs) = Just (DoubleList xs)
 
-
+checkf' :: (Ord a) => Deque a -> Dequ a
+checkf' 

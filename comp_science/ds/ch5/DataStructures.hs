@@ -83,3 +83,33 @@ checkf' f r = DoubleList f r
 fromList' :: (Ord a) => [a] -> DoubleEndedQueue a
 fromList' [] = DoubleList [] []
 fromList' ls = foldl (\acc x -> push' acc x) (DoubleList [] []) ls
+
+-- Class for Heap 
+class Heap h where
+    empty'' :: (Ord a) => h a
+    isEmpty'' :: (Ord a) => h a -> Bool
+    insert :: (Ord a) => a -> h a -> h a
+    merge :: (Ord a) => h a -> h a -> h a
+    findMin :: (Ord a) => h a -> Maybe a
+    deleteMin :: (Ord a) => h a -> Maybe (h a)
+
+data SplayHeap a = E | Tree (SplayHeap a) a (SplayHeap a) deriving (Show, Eq)
+instance Heap SplayHeap where
+    empty'' = E
+    isEmpty'' E = True
+    isEmpty'' _ = False
+
+    insert x t = Tree (smaller x t) x (bigger x t)
+
+bigger pivot E = E
+bigger pivot (Tree a x b) = if x <= pivot then bigger pivot b 
+    else case a of
+            E -> (Tree E x b) 
+            (Tree a' y a'') -> if y <= pivot then (Tree (bigger pivot a'') x b)
+                              else (Tree (bigger pivot a') y (Tree a'' x b))
+smaller pivot E = E
+smaller pivot (Tree a x b) = if x > pivot then smaller pivot a
+    else case b of
+            E -> (Tree a x E)
+            (Tree b' y b'') -> if y > pivot then (Tree x a (smaller pivot b'))
+                               else (Tree ( ) y ( ))

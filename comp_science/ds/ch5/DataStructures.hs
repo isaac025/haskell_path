@@ -93,13 +93,47 @@ class Heap h where
     findMin :: (Ord a) => h a -> Maybe a
     deleteMin :: (Ord a) => h a -> Maybe (h a)
 
+-- SplayHeap
 data SplayHeap a = E | Tree (SplayHeap a) a (SplayHeap a) deriving (Show, Eq)
 instance Heap SplayHeap where
     empty'' = E
     isEmpty'' E = True
     isEmpty'' _ = False
 
-    insert x t = Tree (smaller x t) x (bigger x t)
+    insert x t = let (a,b) = partition x t in (Tree a x b)
+    merge E t = t
+    merge (Tree a x b) t = let (ta,tb) = partition x t
+                           in (Tree (merge ta a) x (merge tb b))
+    findMin E = Nothing
+    findMin (Tree E x b) = Just x
+    findMin (Tree a x b) = findMin a
+
+    deleteMin E = Nothing
+    deleteMin (Tree E x b) = Just b
+    deleteMin (Tree (Tree E x b) y c) = Just (Tree b y c)
+    deleteMin (Tree (Tree a x b) y c) = Just (Tree a' x (Tree b y c))
+        where Just a' = deleteMin a
+
+partition :: (Ord a) => a -> SplayHeap a -> (SplayHeap a, SplayHeap a)
+partition pivot E = (E, E)
+partition  pivot t@(Tree a x b) = if x <= pivot then
+    case b of
+        E -> (t, E)
+        (Tree b' y b'') -> if y <= pivot then
+                            let (small,big) = partition pivot b''
+                            in ((Tree (Tree a x b') y small), big)
+                          else
+                            let (small,big) = partition pivot b'
+                            in ((Tree a x small), (Tree big y b''))
+  else
+    case a of
+        E -> (E,t)
+        (Tree a' y a'') -> if y <= pivot then
+                            let (small, big) = partition pivot a''
+                            in ((Tree a' y small), (Tree big x b))
+                           else
+                            let (small, big) = partition pivot a'
+                            in (small, (Tree big y (Tree a'' x b)))
 
 bigger pivot E = E
 bigger pivot (Tree a x b) = if x <= pivot then bigger pivot b 
@@ -107,9 +141,36 @@ bigger pivot (Tree a x b) = if x <= pivot then bigger pivot b
             E -> (Tree E x b) 
             (Tree a' y a'') -> if y <= pivot then (Tree (bigger pivot a'') x b)
                               else (Tree (bigger pivot a') y (Tree a'' x b))
+
+-- Exercise 5.4
 smaller pivot E = E
 smaller pivot (Tree a x b) = if x > pivot then smaller pivot a
     else case b of
             E -> (Tree a x E)
-            (Tree b' y b'') -> if y > pivot then (Tree x a (smaller pivot b'))
-                               else (Tree ( ) y ( ))
+            (Tree b' y b'') -> if y > pivot then (Tree a x (smaller pivot b'))
+                               else (Tree (Tree a x b' ) y (smaller pivot b'' ))
+
+-- PairingHeap
+data PairingHeap a = EPH | TreePH a [PairingHeap a] deriving (Show, Eq) 
+instance Heap PairingHeap where
+    empty'' = EPH
+    isEmpty'' EPH = True
+    isEmpty'' _ = False
+
+    insert x h = merge (TreePH x []) h
+
+    findMin EPH = Nothing
+    findMin (TreePH x h) = Just x
+
+    deleteMin EPH = Nothing
+    deleteMin (TreePH x hs) = Just (mergePairs hs)
+
+    merge h EPH = h
+    merge EPH h = h
+    merge h1@(TreePH x hs1) h2@(TreePH y hs2) = if x <= y then (TreePH x (h2 : hs1))
+                                                else (TreePH y (h1 : hs2))
+
+
+mergePairs [] = EPH
+mergePairs [h] = h
+mergePairs (h1 : h2 : hs) = merge (merge h1 h2) (mergePairs hs)

@@ -1,15 +1,12 @@
 # Haskell Mastery
 This is a repository containing:
-1. computer science topics (from basics to
-advanced), like [data structures](./comp_science/ds/), [algorithms](./comp_science/algo)<sup>1</sup>, etc.
+1. intro: data structures, algorithms, functional programming specific (SICP,
+   Purely Functional Data Structures, Introduction to Functional Programming
+   through the Lambda Calculus)
 
-2. software engineering practices like [Algebra-Driven
-Design](./advance/software_eng/add), [programming structure](./advance/software_eng/sicp)
+2. advanced: programming languages, compilers, interpreters 
 
-***All implemented in Haskell***.
-
-<sup>1</sup> It is likely to find programming exercises here also from [Project
-Euler](https://projecteuler.net)
+3. master: Software Engineering
 
 # Path
 Legend:
@@ -29,9 +26,11 @@ World. Here is a quote from Esdger Dijkstra that inspired me to do so:
 
 # Resources
 1. *Purely Functional Data Structures* by Chris Okasaki
-2. *The Art Of Computer Programming Vol. 1* by Donald Knuth
-3. *The Art Of Computer Programming Vol. 2* by Donald Knuth
-4. *Cracking the Coding Interview*
-5. *Algebra-Driven Design* by Sandy Maguire
-6. *Structure and Interpretation of Computer Programs* by Gerald Sussman
-7. [Project Euler](https://projecteuler.net)
+2. *Structure and Interpretation of Computer Programs* by Gerald Sussman
+3. *Introduction to Functional Programming through the Lambda Calculus*
+4. *Crafting Intrepreters* by 
+5. *Compilers: Principles, Techniques, and Tools*  
+6. *The Art Of Computer Programming Vol. 1* by Donald Knuth
+7. *The Art Of Computer Programming Vol. 2* by Donald Knuth
+8. *The Art Of Computer Programming Vol. 3* by Donald Knuth
+9. *Algebra-Driven Design* by Sandy Maguire

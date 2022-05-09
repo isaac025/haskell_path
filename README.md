@@ -4,30 +4,24 @@ Haskell (Functional Programming).
 
 ## Contents
 The following are the main repositories:
+
 1. novice: Introduction to Functional Programming through the Lambda Calculus, 
            The Haskell Road To Logic, Math & Programming, Cracking the Coding
            Interview.
 
-2. apprentice: Structure & Interpretation of Computer Programs, Book of Monads 
+2. apprentice: Structure & Interpretation of Computer Programs, Book of Monads
 
-3. adept: Purely Functional Data Structures, The Art Of Computer Programming (1-3) 
+3. adept: Purely Functional Data Structures, The Art Of Computer Programming (1-3)
 
 4. expert: Algebra Driven Design, Software Abstractions: Logic, Language, and Analysis, 
-           Haskell in Depth, Crafting Interpreters
+           Haskell in Depth, 
 
-6. master: Compilers: Principles, Techniques, & Tools, Assemblers and Loaders,  
+5. master: Crafting Interpreters, Compilers: Principles, Techniques, & Tools, 
+           Assemblers and Loaders,
+             
 
-6. legendary: Structured Computer Organization, Operating Systems: Design and
-              Implementation.
-
-# Path
-Legend:
-- blue: Books
-- green: Highly Recommended Books
-- orange: repo
-- red: Decisions
-
-![path](./HaskellPath.drawio.png)
+6. legendary: Model Checking, Structured Computer Organization, 
+              Operating Systems: Design and Implementation.
 
 # Goal
 The goal of this repository is learn Haskell by applying all topics covered

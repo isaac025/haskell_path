@@ -1,6 +1,8 @@
 module Exercises where
 
 import BAWP
+import Data.List (scanl1)
+import Prelude hiding (gcd)
 -- E 1.1
 -- 10 returns 10
 -- (+ 5 3 4) returns 12
@@ -112,6 +114,70 @@ f_iter_helper count n
     | otherwise     = f_iter_helper (count + 1) ((n - 1) + (2*(n-2)) + (3*(n-3)))
 
 -- E 1.12
--- E 1.13
+center :: String -> Int -> String
+center s n = spaces ++ s ++ spaces
+    where spaces = replicate ((n-length s) `div` 2) ' '
 
+pascal :: [[Int]]
+pascal = iterate (\row -> zipWith (+) ([0] ++ row) (row ++ [0])) [1]
+
+trianglePrinter :: IO ()
+trianglePrinter = mapM_ putStrLn $ ((flip center 40 . unwords) . map show) <$> take 10 pascal
+
+-- E 1.13
+-- Prove Fib(n) is the closest integer to (phi^n)/(sqrt 5) where phi = (1 + sqrt 5) / 2
+-- HINT: let v = (1 - sqrt 5) /2 use induction to prove that Fib(n) = (phi^n - v^n) / (sqrt 5)
+
+-- E 1.14
+-- E 1.15
+cube :: (Num p) => p -> p
+cube x = x * x * x
+
+p' :: (Num a) => a -> a
+p' x = (3*x)-(4 *(cube x))
+
+sine :: (Num p, Ord p, Fractional p) => p -> p
+sine angle = if (abs angle > 0.1) then angle
+             else p' (sine (angle / 3.0))
+-- a. Just 1 time
+-- b. growth of 1
+
+-- E 1.16
+-- E 1.17
+mul :: (Num p, Ord p) => p -> p -> p
+mul a b = if b == 0 then 0
+          else a + (mul a (b-1))
+
+doubles :: (Num p, Ord p) => p -> p
+doubles n = 2 * n 
+
+halve :: (Num p, Ord p, Integral p) => p -> p
+halve n = if even n then n `div` 2
+          else 0
+
+fast_mul :: (Num p, Ord p, Integral p) => p -> p -> p
+fast_mul a b
+    | b == 0 = 0
+    | even b = double (fast_mul a (halve b))
+    | otherwise = a + (fast_mul a (b - 1))
+
+-- E 1.18
+mul' :: (Ord p, Num p) => p -> p -> p
+mul' a b = mul_iter a b 0
+
+mul_iter :: (Ord p, Num p) => p -> p -> p -> p
+mul_iter a counter product = if counter == 0 then product
+                             else mul_iter a (counter-1) (a + product)
+
+-- E 1.19
+fib' :: (Ord p, Num p, Integral p) => p -> p
+fib' n = fib_iter' 1 0 0 1 n
+
+fib_iter' :: (Ord p, Num p, Integral p) => p -> p -> p -> p -> p -> p
+fib_iter' a b p q count
+    | count == 0 = b
+    | even count = fib_iter' a b q p (count `div` 2)
+    | otherwise = fib_iter' ((b*q) + (a*q) + (a*p)) ((b*p) + (a*q)) p q (count-1)
+
+-- E 1.20
 

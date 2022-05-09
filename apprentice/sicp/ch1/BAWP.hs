@@ -2,6 +2,8 @@
 
 module BAWP where
 
+import Prelude hiding (gcd)
+
 size :: Num p => p
 size = 2
 
@@ -87,3 +89,25 @@ first_denomination kinds_of_coins
     | kinds_of_coins == 4 = 25
     | kinds_of_coins == 5 = 50
 
+expt :: (Ord p, Num p) => p -> p -> p
+expt b n = if n == 0 then 1
+           else b * (expt b (n -1))
+
+expt' :: (Ord p, Num p) => p -> p -> p
+expt' b n = expt_iter b n 1
+
+expt_iter :: (Ord p, Num p) => p -> p -> p -> p
+expt_iter b counter product = if counter == 0 then product
+                              else expt_iter b (counter-1) (b * product)
+
+fast_expt :: (Ord p, Num p, Integral p) => p -> p -> p
+fast_expt b n
+    | n == 0 = 1
+    | even n = square (fast_expt b (n `div` 2))
+    | otherwise = b * (fast_expt b (n - 1))
+
+gcd :: (Ord p, Num p, Integral p) => p -> p -> p
+gcd a b = if b == 0 then a
+          else gcd b (rem a b)
+
+smallest_divisor n = find_divisor n 2

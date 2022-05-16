@@ -1,3 +1,5 @@
+{-# LANGUAGE MonadComprehensions #-}
+
 module BN where
 
 import DM (Tree(..), Person(..), State(..), validateName, validateAge)
@@ -8,6 +10,8 @@ relabel (Node l r) = do
     l' <- relabel l
     r' <- relabel r
     return (Node l' r')
+
+relabel' (Node l r) = [ Node l' r' | l' <- relabel' l, r' <- relabel' r ]
     
 validatePerson name age = do
     name' <- validateName name
@@ -19,14 +23,15 @@ validatePerson' name age = validateAge age >>= \age' ->
                            in validateName name >>= \name' ->
                               return (Person name' age')
 
-put :: s -> State s ()
-put s = undefined
+--put :: s -> State s ()
+--put s = undefined
 
-get :: State s s
-get = undefined 
 
-incrCounter :: State Int Int
-incrCounter = do n <- get 
+--get :: State s s
+--get = undefined 
+
+--incrCounter :: State Int Int
+--incrCounter = do n <- get 
                  --p <- put (n+1)
-                 put (n+1)
-                 return (n+1)
+--               put (n+1)
+--               return (n+1)
